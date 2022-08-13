@@ -1,1 +1,1 @@
-web: gunicorn changelogy.wsgi
+web: gunicorn houseplants.wsgi
