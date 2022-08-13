@@ -1,42 +1,45 @@
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.template import loader
 
-from .models import ScheduledTask, Task
+from .models import Plant
+
+CONTEXT = {
+    "TITLE": "Houseplant reminder",
+    "DESCRIPTION": "A simple houseplant water/feed reminder",
+    "KEYWORDS": "houseplant, water, feed, reminder, tasks, list"
+}
 
 
 def list(request):
-    template = loader.get_template('reminders/index.html')
-    context = {
+    template = loader.get_template('reminders/base.html')
+    ctx = CONTEXT.copy()
+    ctx.update({
         'message': None,
-        'objects': ScheduledTask.objects.order_by('-due_date'),
-    }
-    return HttpResponse(template.render(context, request))
+        'objects': Plant.objects.all(),
+    })
+    return HttpResponse(template.render(ctx, request))
 
 
-def details(request, id):
-    template = loader.get_template('deployments/details.html')
-    context = {
-        'object': get_object_or_404(ScheduledTask, pk=id),
-    }
-    return HttpResponse(template.render(context, request))
+def mark_water(request, id):
+    obj = get_object_or_404(Plant, pk=id)
+    obj.scheduled_plant.mark_water()
+    return redirect('list')
 
 
-def complete(request, id):
-    template = loader.get_template('deployments/index.html')
-    obj = get_object_or_404(ScheduledTask, pk=id)
-    obj.mark_complete()
-    context = {
-        'objects': ScheduledTask.objects.order_by('-due_date')
-    }
-    return HttpResponse(template.render(context, request))
+def mark_feed(request, id):
+    obj = get_object_or_404(Plant, pk=id)
+    obj.scheduled_plant.mark_feed()
+    return redirect('list')
 
 
-def delete(request, id):
-    template = loader.get_template('deployments/index.html')
-    obj = get_object_or_404(ScheduledTask, pk=id)
-    obj.delete()
-    context = {
-        'objects': ScheduledTask.objects.order_by('-due_date')
-    }
-    return HttpResponse(template.render(context, request))
+def new_schedule(request, id):
+    obj = get_object_or_404(Plant, pk=id)
+    obj.new_schedule()
+    return redirect('list')
+
+
+def delete_schedule(request, id):
+    obj = get_object_or_404(Plant, pk=id)
+    obj.scheduled_plant.delete()
+    return redirect('list')

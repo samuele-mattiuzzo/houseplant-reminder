@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ScheduledTask, Task
+from .models import Plant, ScheduledPlant
 
-admin.site.register(Task)
-admin.site.register(ScheduledTask)
+admin.site.register(Plant)
+admin.site.register(ScheduledPlant)
