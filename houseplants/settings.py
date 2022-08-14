@@ -17,7 +17,7 @@ if 'SECRET_KEY' in os.environ:
     SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not IS_HEROKU
+DEBUG = not IS_HEROKU if not "DEBUG" in os.environ else os.environ["DEBUG"]
 
 ALLOWED_HOSTS = ['.herokuapp.com'] if IS_HEROKU else ['*']
 
