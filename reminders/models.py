@@ -127,8 +127,6 @@ class ScheduledPlant(models.Model):
         res = (100 - int(
             due_date_seconds/(100*time_left_seconds)
         ))
-        import pdb
-        pdb.set_trace()
         return res
 
     def _update_next_due_for_action(self, action_type=WATER_ACTION, first_update=False):
