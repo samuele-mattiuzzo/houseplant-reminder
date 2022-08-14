@@ -3,6 +3,7 @@
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import include, path
 from django.views.generic.base import RedirectView
 
@@ -13,8 +14,6 @@ if settings.ADMIN_ENABLED is True:
 
 urlpatterns += [
     path('', include('reminders.urls')),
-    path(
-        "favicon.ico",
-        RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),
-    ),
 ]
+if settings.DEBUG:
+    urlpatterns += staticfiles_urlpatterns()
