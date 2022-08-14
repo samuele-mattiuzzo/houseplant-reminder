@@ -4,38 +4,64 @@
     <title>{{ TITLE }}</title>
     <meta name="description" content="{{ DESCRIPTION }}" />
     <meta name="keywords" content="{{ KEYWORDS }}" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font: 14px Verdana, Arial, Sans-Serif;
+      }
+      .plant-row {
+        column-count: 2; 
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        height: 30em;
+        width: 100%;
+        margin: 0;
+
+        vertical-align:text-top;
+      }
+      .plant {
+        break-before: column;
+        -webkit-column-break-before: column;
+        -moz-column-break-before: column;
+        height: 100%;
+        width: 100% auto;
+        padding: 0 10px;
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
-    {% for plant in objects %}
-    <div class="plant-row" style="background-color:{{ plant.color }}">
-      <ul class="plant-details">
-        <li>Plant name : {{ plant.name }}</li>
-        <li>Description : {{ plant.description }}</li>
-        <li>Water every {{ plant.water_repeat_every_human }}</li>
-        <li>Feed every {{ plant.feed_repeat_every_human }}</li>
-      </ul>
-      <div class="plant-progress">
-        <progress
-          value="{{ plant.schedule.water_time_left_percent }}"
-          max="100"
-        ></progress
-        ><br />
-        Next watering date: {{ plant.schedule.scheduled_water_date }}
-        <br /><br />
-        <span>{{ plant.schedule.water_time_left.0 }} days,</span>
-        <span>{{ plant.schedule.water_time_left.1 }} hours</span> left
-        <progress
-          value="{{ plant.schedule.feed_time_left_percent }}"
-          max="100"
-        ></progress
-        ><br />
-        Next feed date: {{ plant.schedule.scheduled_feed_date }}
-        <br /><br />
-        <span>{{ plant.schedule.feed_time_left.0 }} days,</span>
-        <span>{{ plant.schedule.feed_time_left.1 }} hours</span> left
-      </div>
-      <hr />
-    </div>
-    {% endfor %}
+    <div class="plant-row">
+      {% for plant in objects %}
+        <div class="plant" style="background-color:{{ plant.color }}">
+          <p>Plant name : {{ plant.name }}</p>
+          <p>Description : {{ plant.description }}</p>
+          <p>Water every {{ plant.water_repeat_every_human }}</p>
+          <p>Feed every {{ plant.feed_repeat_every_human }}</p>
+          <progress
+            value="{{ plant.schedule.water_time_left_percent }}"
+            max="100"
+          ></progress
+          ><br />
+          Next watering date: {{ plant.schedule.scheduled_water_date }}
+          <br /><br />
+          <span>{{ plant.schedule.water_time_left.0 }} days,</span>
+          <span>{{ plant.schedule.water_time_left.1 }} hours</span> left
+          <progress
+            value="{{ plant.schedule.feed_time_left_percent }}"
+            max="100"
+          ></progress
+          ><br />
+          Next feed date: {{ plant.schedule.scheduled_feed_date }}
+          <br /><br />
+          <span>{{ plant.schedule.feed_time_left.0 }} days,</span>
+          <span>{{ plant.schedule.feed_time_left.1 }} hours</span> left
+        </div>
+        <hr />
+      {% endfor %}
+    </div
   </body>
 </html>
