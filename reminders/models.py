@@ -17,12 +17,12 @@ OTHER_DAY = '5'
 OTHER_WEEK = '6'
 REPEAT_CHOICES = [
     (NEVER, 'never'),
-    (ONE_HOUR, '1 hour'),
-    (ONE_DAY, '1 day'),
-    (ONE_WEEK, '1 week'),
-    (ONE_MONTH, '1 month'),
-    (OTHER_DAY, 'every 2 days'),
-    (OTHER_WEEK, 'every 2 weeks'),
+    (ONE_HOUR, 'every hour'),
+    (ONE_DAY, 'once a day'),
+    (ONE_WEEK, 'once a week'),
+    (ONE_MONTH, 'once a month'),
+    (OTHER_DAY, 'once every 2 days'),
+    (OTHER_WEEK, 'once every 2 weeks'),
 ]
 
 

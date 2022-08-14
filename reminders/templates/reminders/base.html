@@ -31,10 +31,9 @@
     <div class="plant-row">
       {% for plant in objects %}
         <div class="plant" style="background-color:{{ plant.color }}">
-          <p>Plant name : {{ plant.name }}</p>
-          <p>Description : {{ plant.description }}</p>
-          <p>Water every {{ plant.water_repeat_every_human }}</p>
-          <p>Feed every {{ plant.feed_repeat_every_human }}</p>
+          <p><strong>{{ plant.name }}</strong>: {{ plant.description }}</p>
+          <p>Water {{ plant.water_repeat_every_human }}</p>
+          <p>Feed {{ plant.feed_repeat_every_human }}</p>
           <progress
             value="{{ plant.schedule.water_time_left_percent }}"
             max="100"
