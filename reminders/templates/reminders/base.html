@@ -8,63 +8,7 @@
     <script src="https://kit.fontawesome.com/8f41753165.js"
             crossorigin="anonymous"></script>
 
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        font-smooth: always;
-      }
-      body {
-        font-family: -apple-system, system-ui, Helvetica, Arial, sans-serif;
-        margin: 0;
-        color: #444444;
-      }
-      .plant-rows {
-        margin: 0;
-        width: 100%;
-      }
-      .plant {
-        display: block;
-        margin: 0;
-        padding: 10px 10px 15px 10px;
-        text-align: center;
-        width: 100%;
-      }
-      .progress-label {
-        font-size: 10px;
-      }
-      progress {
-        -webkit-appearance: none;
-      }
-      .water::-webkit-progress-value {
-        background: #1a76ff;
-      }
-      .water::-moz-progress-bar {
-        background: #1a76ff;
-      }
-      .feed::-webkit-progress-value {
-        background: #aacb96;
-      }
-      .feed::-moz-progress-bar {
-        background: #aacb96;
-      }
-      i.water {
-        color: #1a76ff;
-      }
-      i.feed {
-        color: #aacb96;
-      }
-      i.info:hover {
-        color: gray;
-      }
-      i.mark-done {
-        margin-left: 4px;
-      }
-      i.mark-done:hover {
-        background: #408a5c; 
-        color: white;
-      }
-    </style>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
   </head>
   <body>
