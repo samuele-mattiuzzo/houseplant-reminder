@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-#import dj_database_url
+import dj_database_url
 from django.test.runner import DiscoverRunner
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,7 +19,7 @@ if 'SECRET_KEY' in os.environ:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not IS_HEROKU
 
-ALLOWED_HOSTS = ["*"] if IS_HEROKU else []
+ALLOWED_HOSTS = ['.herokuapp.com'] if IS_HEROKU else ['*']
 
 USE_TZ = True
 # Application definition
@@ -79,8 +79,8 @@ DATABASES = {
 }
 if "DATABASE_URL" in os.environ:
     # Configure Django for DATABASE_URL environment variable.
-    # DATABASES["default"] = dj_database_url.config(
-    #    conn_max_age=MAX_CONN_AGE, ssl_require=True)
+    DATABASES["default"] = dj_database_url.config(
+        conn_max_age=MAX_CONN_AGE, ssl_require=True)
 
     # Enable test database if found in CI environment.
     if "CI" in os.environ:
