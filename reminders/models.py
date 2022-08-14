@@ -1,29 +1,10 @@
 import datetime
 import random
 
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
-FEED_ACTION = 'F'
-WATER_ACTION = 'W'
-NEVER = '0'
-ONE_HOUR = '1'
-ONE_DAY = '2'
-ONE_WEEK = '3'
-ONE_MONTH = '4'
-OTHER_DAY = '5'
-OTHER_WEEK = '6'
-REPEAT_CHOICES = [
-    (NEVER, 'never'),
-    (ONE_HOUR, 'every hour'),
-    (ONE_DAY, 'once a day'),
-    (ONE_WEEK, 'once a week'),
-    (ONE_MONTH, 'once a month'),
-    (OTHER_DAY, 'once every 2 days'),
-    (OTHER_WEEK, 'once every 2 weeks'),
-]
+from .constants import *
 
 
 class Plant(models.Model):
@@ -40,7 +21,7 @@ class Plant(models.Model):
         return self.name
 
     def _generate_color_code(self):
-        return '#' + str(hex(random.randint(0, 16777215)))[2:]
+        return random.choice(COLORS)
 
     @property
     def schedule(self):
