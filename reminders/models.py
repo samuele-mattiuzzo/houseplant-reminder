@@ -14,7 +14,7 @@ ONE_DAY = '2'
 ONE_WEEK = '3'
 ONE_MONTH = '4'
 OTHER_DAY = '5'
-OTHER_WEEK = '7'
+OTHER_WEEK = '6'
 REPEAT_CHOICES = [
     (NEVER, 'never'),
     (ONE_HOUR, '1 hour'),
