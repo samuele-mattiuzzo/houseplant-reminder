@@ -76,26 +76,34 @@
              <strong>{{ plant.name }}</strong>{% if plant.flowered %}<i class="fa-solid fa-flower"></i>{% endif %}</p>
           <p class="progress-label"
              data-value="{{ plant.schedule.water_time_left_percent }}">
-             <span>{{ plant.schedule.water_time_left.0 }} days,</span>
-             <span>{{ plant.schedule.water_time_left.1 }} hours</span> left  
+             <span>{{ plant.schedule.water_time_left.0 }} days </span> left  
           </p><i class="fa-solid fa-droplet water"></i>
           <progress
             class="water"
             value="{{ plant.schedule.water_time_left_percent }}"
             max="100"
           ></progress
-          ><i class="fa-solid fa-check mark-done"></i>
+          >
+          {% if can_edit %}
+            <a href="{% url 'reminders:mark-water' plant.pk %}">
+              <i class="fa-solid fa-check mark-done"></i>
+            </a>
+          {% endif %}
           <p class="progress-label" 
              data-value="{{ plant.schedule.feed_time_left_percent }}">
-             <span>{{ plant.schedule.feed_time_left.0 }} days,</span>
-             <span>{{ plant.schedule.feed_time_left.1 }} hours</span> left  
+             <span>{{ plant.schedule.feed_time_left.0 }} days </span> left  
           </p><i class="fa-solid fa-bottle-droplet feed"></i>
           <progress
             class="feed"
             value="{{ plant.schedule.feed_time_left_percent }}"
             max="100"
           ></progress
-          ><i class="fa-solid fa-check mark-done"></i>
+          >
+          {% if can_edit %}
+            <a href="{% url 'reminders:mark-feed' plant.pk %}">
+              <i class="fa-solid fa-check mark-done"></i>
+            </a>
+          {% endif %}
         </div>
         <hr />
       {% endfor %}

@@ -17,29 +17,18 @@ def list(request):
     ctx.update({
         'message': None,
         'objects': Plant.objects.all(),
+        'can_edit': request.user.is_authenticated
     })
     return HttpResponse(template.render(ctx, request))
 
 
 def mark_water(request, id):
     obj = get_object_or_404(Plant, pk=id)
-    obj.scheduled_plant.mark_water()
-    return redirect('list')
+    obj.schedule.mark_water()
+    return redirect('reminders:list')
 
 
 def mark_feed(request, id):
     obj = get_object_or_404(Plant, pk=id)
-    obj.scheduled_plant.mark_feed()
-    return redirect('list')
-
-
-def new_schedule(request, id):
-    obj = get_object_or_404(Plant, pk=id)
-    obj.new_schedule()
-    return redirect('list')
-
-
-def delete_schedule(request, id):
-    obj = get_object_or_404(Plant, pk=id)
-    obj.scheduled_plant.delete()
-    return redirect('list')
+    obj.schedule.mark_feed()
+    return redirect('reminders:list')

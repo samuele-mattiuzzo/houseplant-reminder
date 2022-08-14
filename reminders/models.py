@@ -75,7 +75,7 @@ class ScheduledPlant(models.Model):
     def water_time_left_percent(self):
         return self._time_left_percent(WATER_ACTION)
 
-    def mark_refeed(self):
+    def mark_feed(self):
         self._update_next_due_for_action(FEED_ACTION)
         self.last_feed = timezone.now()
         self.save()
