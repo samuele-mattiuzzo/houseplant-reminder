@@ -6,13 +6,17 @@
     <title>{{ TITLE }}</title>
     <meta name="description" content="{{ DESCRIPTION }}" />
     <meta name="keywords" content="{{ KEYWORDS }}" />
+    <script src="https://kit.fontawesome.com/8f41753165.js"
+            crossorigin="anonymous"></script>
+
     <style>
       * {
         margin: 0;
         padding: 0;
       }
       body {
-        font: 14px Verdana, Arial, Sans-Serif;
+        font-family: -apple-system, system-ui, Helvetica, Arial, sans-serif;
+        margin: 0;
       }
       .plant-row {
         align-items: center;
@@ -23,9 +27,43 @@
       }
       .plant {
         margin: 0;
-        padding: 10px 10px;
+        padding: 10px 10px 15px 10px;
         text-align: center;
         width: 100%;
+      }
+      .progress-label {
+        font-size: 10px;
+      }
+      progress {
+        -webkit-appearance: none;
+      }
+      .water::-webkit-progress-value {
+        background: blue;
+      }
+      .water::-moz-progress-bar {
+        background: blue;
+      }
+      .feed::-webkit-progress-value {
+        background: green;
+      }
+      .feed::-moz-progress-bar {
+        background: green;
+      }
+      i.water {
+        color: blue;
+      }
+      i.feed {
+        color: green;
+      }
+      i.info:hover {
+        color: gray;
+      }
+      i.mark-done {
+        margin-left: 4px;
+      }
+      i.mark-done:hover {
+        background: green; 
+        color: white;
       }
     </style>
     <link rel="icon"href="{% static 'favicon.ico' %}">
@@ -34,29 +72,36 @@
     <div class="plant-row">
       {% for plant in objects %}
         <div class="plant" style="background-color:{{ plant.color }}">
-          <p><strong>{{ plant.name }}</strong>: {{ plant.description }}</p>
-          <p>Water {{ plant.water_repeat_every_human }}</p>
-          <p>Feed {{ plant.feed_repeat_every_human }}</p>
+          <p><i class="fa-solid fa-circle-info info" title="{{ plant.description }}"></i>
+             <strong>{{ plant.name }}</strong></p>
+          <p class="progress-label"
+             data-value="{{ plant.schedule.water_time_left_percent }}">
+             <span>{{ plant.schedule.water_time_left.0 }} days,</span>
+             <span>{{ plant.schedule.water_time_left.1 }} hours</span> left  
+          </p><i class="fa-solid fa-droplet water"></i>
           <progress
+            class="water"
             value="{{ plant.schedule.water_time_left_percent }}"
             max="100"
           ></progress
-          ><br />
-          Next watering date: {{ plant.schedule.scheduled_water_date }}
-          <br /><br />
-          <span>{{ plant.schedule.water_time_left.0 }} days,</span>
-          <span>{{ plant.schedule.water_time_left.1 }} hours</span> left
+          ><i class="fa-solid fa-check mark-done"></i>
+          <p class="progress-label" 
+             data-value="{{ plant.schedule.feed_time_left_percent }}">
+             <span>{{ plant.schedule.feed_time_left.0 }} days,</span>
+             <span>{{ plant.schedule.feed_time_left.1 }} hours</span> left  
+          </p><i class="fa-solid fa-bottle-droplet feed"></i>
           <progress
+            class="feed"
             value="{{ plant.schedule.feed_time_left_percent }}"
             max="100"
           ></progress
-          ><br />
-          Next feed date: {{ plant.schedule.scheduled_feed_date }}
-          <br /><br />
-          <span>{{ plant.schedule.feed_time_left.0 }} days,</span>
-          <span>{{ plant.schedule.feed_time_left.1 }} hours</span> left
+          ><i class="fa-solid fa-check mark-done"></i>
         </div>
-        <hr />
+        {% if forloop.counter|divisibleby:2 %}
+          </div>
+          <hr />
+          <div class="plant-row">
+        {% endif %}
       {% endfor %}
     </div
   </body>

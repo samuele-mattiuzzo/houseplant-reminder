@@ -147,3 +147,6 @@ if "CI" in os.environ:
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+ADMIN_ENABLED = True
+if "ADMIN_ENABLED" in os.environ:
+    ADMIN_ENABLED = os.environ["ADMIN_ENABLED"]
