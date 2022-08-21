@@ -104,7 +104,6 @@ class ScheduledPlant(models.Model):
         epoch = timezone.make_aware(
             datetime.datetime(1970, 1, 1))
         due_date_seconds = (due_date_seconds - epoch).total_seconds()
-        # time_left_seconds = (time_left_seconds - epoch).total_seconds()
         res = (100 - int(
             due_date_seconds/(100*time_left_seconds)
         ))
@@ -124,27 +123,22 @@ class ScheduledPlant(models.Model):
         else:
             if rpt == ONE_HOUR:
                 res = last_action + datetime.timedelta(hours=1)
-            elif rpt == ONE_DAY:
-                res = last_action + datetime.timedelta(days=1)
-            elif rpt == ONE_WEEK:
-                res = last_action + datetime.timedelta(days=7)
-            elif rpt == ONE_MONTH:
-                res = last_action + datetime.timedelta(days=30)
-            elif rpt == OTHER_DAY:
-                res = last_action + datetime.timedelta(days=2)
-            elif rpt == OTHER_WEEK:
-                res = last_action + datetime.timedelta(days=14)
+            else:
+                if rpt == ONE_DAY: days = 1
+                elif rpt == ONE_WEEK: days = 7
+                elif rpt == ONE_MONTH: days = 30
+                elif rpt == OTHER_DAY: days = 2
+                elif rpt == OTHER_WEEK: days = 14
+                res = last_action + datetime.timedelta(days=days)
 
-        if first_update:
-            if action_type == WATER_ACTION:
+        if action_type == WATER_ACTION:
+            if first_update:
                 self.scheduled_water_date = res
-            else:
-                self.scheduled_feed_date = res
+            self.last_water = res
         else:
-            if action_type == WATER_ACTION:
-                self.last_water = res
-            else:
-                self.last_feed = res
+            if first_update:
+                self.scheduled_feed_date = res
+            self.last_feed = res
 
     def save(self, *args, **kwargs):
         if not self.scheduled_feed_date:
