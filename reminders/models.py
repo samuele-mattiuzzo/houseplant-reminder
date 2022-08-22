@@ -132,13 +132,13 @@ class ScheduledPlant(models.Model):
                 res = last_action + datetime.timedelta(days=days)
 
         if action_type == WATER_ACTION:
+            self.scheduled_water_date = res
             if first_update:
-                self.scheduled_water_date = res
-            self.last_water = res
+                self.last_water = res
         else:
+            self.scheduled_feed_date = res
             if first_update:
-                self.scheduled_feed_date = res
-            self.last_feed = res
+                self.last_feed = res
 
     def save(self, *args, **kwargs):
         if not self.scheduled_feed_date:
